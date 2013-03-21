@@ -1,0 +1,26 @@
+{% extends 'AcmeDemoBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'hotels.list.title'|trans }}</h1>
+        <table class="table table-striped table-condensed" span="4">
+            <thead>
+                <tr>
+                    <th>{{ 'hotels.list.name'|trans }}</th>
+                    <th>{{ 'hotels.list.rating'|trans }}</th>
+                    <th>{{ 'hotels.list.city'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hotel in hotels %}
+                <tr>
+                    <td><a href="{{ path('_hotel_show', { 'hotel_id': hotel.id }) }}">{{ hotel.name }}</a></td>
+                    <td>{{ hotel.stars }}</td>
+                    <td>{{ hotel.city }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
+
+    
+    

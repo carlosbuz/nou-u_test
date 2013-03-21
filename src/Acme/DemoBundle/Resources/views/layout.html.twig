@@ -1,49 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Demo Bundle{% endblock %}</title>
-        <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/acmedemo/css/demo.css') }}" />
-    </head>
-    <body>
-        <div id="symfony-wrapper">
-            <div id="symfony-header">
-                <a href="{{ path('_welcome') }}">
-                    <img src="{{ asset('bundles/acmedemo/images/logo.gif') }}" alt="Symfony logo" />
-                </a>
-                <form id="symfony-search" method="GET" action="http://symfony.com/search">
-                    <label for="symfony-search-field"><span>Search on Symfony Website</span></label>
-                    <input name="q" id="symfony-search-field" type="search" placeholder="Search on Symfony website" class="medium_txt" />
-                    <input type="submit" class="symfony-button-grey" value="OK" />
-                </form>
-            </div>
+{% extends '::base.html.twig' %}
 
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-                <div class="flash-message">
-                    <em>Notice</em>: {{ flashMessage }}
-                </div>
-            {% endfor %}
+{% block title %}Hotel{% endblock %}
 
-            {% block content_header %}
-                <ul id="menu">
-                    {% block content_header_more %}
-                        <li><a href="{{ path('_demo') }}">Demo Home</a></li>
-                    {% endblock %}
-                </ul>
+{% block stylesheets %}
+    {% stylesheets 
+        'bundles/acmedemo/css/style.css' filter='cssrewrite' 
+        'bundles/acmedemo/css/bootstrap.min.css' filter='cssrewrite' 
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 
-                <div style="clear: both"></div>
-            {% endblock %}
+    <style type="text/css">body {padding-top: 60px; padding-bottom: 40px;} .sidebar-nav {padding: 9px 0;}</style>
 
-            <div class="symfony-content">
-                {% block content %}
-                {% endblock %}
-            </div>
+    <link rel="shortcut icon" href="ico/favicon.ico"/>
+{% endblock %}
+        
+{% block body %}
+    {% include 'AcmeDemoBundle::topbar.html.twig' %}
 
-            {% if code is defined %}
-                <h2>Code behind this page</h2>
-                <div class="symfony-content">{{ code|raw }}</div>
-            {% endif %}
-        </div>
-    </body>
-</html>
+    <div class="container-fluid">
+        <div class="row-fluid">{% block content %}{% endblock %}</div>
+        <hr/>
+
+        <footer><p>&copy; Carlos Puerta Santana {{ "now"|date("Y") }}</p></footer>
+    </div>
+
+    {% block javascripts %}
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="{{ asset('bundles/acmedemo/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+{% endblock %}
