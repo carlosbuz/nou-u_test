@@ -1,0 +1,46 @@
+header:
+  title: Omitsis
+  nav:
+    hotels: Hoteles
+    reservations: Reservas
+    
+hotel:
+  list:
+    title: Hoteles
+    action:
+      title: Acciones
+      book: Reservar
+  name: Nombre
+  stars: Estrellas
+  city: Ciudad
+  
+room:
+  number: Número
+  
+customer:
+  name: Nombre
+  
+reservation:
+  list:
+    room:
+      number: Habitación
+    customer:
+      name: Huésped
+      age: Edad del huésped
+    none: No se han realizado reservadas
+    button: 
+      back: Volver
+  dateIn: Fecha de entrada
+  dateOut: Fecha de salida
+  form:
+    label:
+      room: Habitación
+      customer: Cliente
+      dateIn: Fecha de entrada
+      dateOut: Fecha de salida
+    place_holder:
+      dateIn: Introduce la fecha de entrada
+      dateOut: Introduce la fecha de salida
+    button:
+      send: Reservar
+      cancel: Cancelar

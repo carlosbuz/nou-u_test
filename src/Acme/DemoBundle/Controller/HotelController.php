@@ -3,6 +3,7 @@
 namespace Acme\DemoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -14,6 +15,7 @@ class HotelController extends Controller
      */
     public function indexAction()
     {
+        // Gets all hotels data.
         $em     = $this->getDoctrine()->getEntityManager();
         $hotels = $em->getRepository( 'AcmeDemoBundle:Hotel' )->findAll();
         
@@ -28,12 +30,19 @@ class HotelController extends Controller
      */
     public function showAction( $hotel_id )
     {
-        $em             = $this->getDoctrine()->getEntityManager();
-        $reservations   = $em->getRepository( 'AcmeDemoBundle:Hotel' )->findOneBy( $hotel_id );
+        // Gets hotel and its reservations data.
+        $em     = $this->getDoctrine()->getEntityManager();
+        $hotel  = $em->getRepository( 'AcmeDemoBundle:Hotel' )->findOneById( $hotel_id );
         
+        if( empty( $hotel ) ) {
+            throw new NotFoundHttpException( 'Página no encontrada' );
+        }
+        
+        $reservations = $em->getRepository( 'AcmeDemoBundle:Reservation' )->getHotelReservations( $hotel_id );
         
         return array( 
-            
+            'hotel'         => $hotel,
+            'reservations'  => $reservations
         );
     }
 }

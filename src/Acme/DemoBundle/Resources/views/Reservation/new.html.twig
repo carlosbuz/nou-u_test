@@ -1,0 +1,63 @@
+{% extends 'AcmeDemoBundle::layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts 
+        'bundles/acmedemo/js/validation/jquery.validate.min.js'
+        'bundles/acmedemo/js/validation/messages_es.js'
+        'bundles/acmedemo/js/reservation.js'
+    %}
+        <script type="text/javascript" src="{{asset_url}}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/acmedemo/js/reservation.js') }}"></script>
+{% endblock %}
+        
+{% block content %} 
+<h1>Reserva para hotel {{ hotel.name }}</h1>
+
+<div class="container-fluid">
+    <form class="reservation-form" action="{{ path('_reservation_new', { 'hotel_id': hotel.id }) }}" method="post" {{ form_enctype(form) }}>
+        <legend></legend>
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="row-fluid">
+                    <div class="span4 bgcolor">
+                        {{ form_label(form.customer) }}
+                        {{ form_widget(form.customer) }}
+                        {{ form_errors(form.customer) }}
+                    </div>
+                    <div class="span4 bgcolor">
+                        {{ form_label(form.room) }}
+                        {{ form_widget(form.room) }}
+                        {{ form_errors(form.room) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="row-fluid">
+                    <div class="span4 bgcolor">
+                        {{ form_label(form.in_date) }}
+                        {{ form_widget(form.in_date, { 'attr': {'class':'input-mini','placeholder':'reservation.form.place_holder.dateIn' } }) }}
+                        {{ form_errors(form.in_date) }}
+                    </div>
+                    <div class="span4 bgcolor">
+                        {{ form_label(form.out_date) }}
+                        {{ form_widget(form.out_date, { 'attr': {'class':'input-large','placeholder':'reservation.form.place_holder.dateOut'} }) }}
+                        {{ form_errors(form.out_date) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <input type="submit" value="{{ 'reservation.form.button.send'|trans }}" class="btn btn-primary" />
+            <a class="btn btn-danger" href="{{ path('_hotel_index') }}">
+                {{ 'reservation.form.button.cancel'|trans }}
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

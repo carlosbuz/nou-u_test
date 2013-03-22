@@ -1,0 +1,4 @@
+.hotel-box {float: left;margin-right: 30px;width: 400px;}
+.hotel-info, .hotel-box img {float:left;}
+.hotel-info {margin-right: 10px;}
+.hotel-info span{display: block;}

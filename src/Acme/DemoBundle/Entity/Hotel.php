@@ -3,9 +3,10 @@
 namespace Acme\DemoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Acme\DemoBundle\Repository\HotelRepository")
  * @ORM\Table(name="hotel")
  */
 class Hotel
@@ -32,6 +33,16 @@ class Hotel
      */
     protected $city;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Room", mappedBy="hotel")
+     */
+    protected $rooms;
+    
+    public function __construct()
+    {
+        $this->rooms = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -109,5 +120,38 @@ class Hotel
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Add rooms
+     *
+     * @param \Acme\DemoBundle\Entity\Room $rooms
+     * @return Hotel
+     */
+    public function addRoom(\Acme\DemoBundle\Entity\Room $rooms)
+    {
+        $this->rooms[] = $rooms;
+    
+        return $this;
+    }
+
+    /**
+     * Remove rooms
+     *
+     * @param \Acme\DemoBundle\Entity\Room $rooms
+     */
+    public function removeRoom(\Acme\DemoBundle\Entity\Room $rooms)
+    {
+        $this->rooms->removeElement($rooms);
+    }
+
+    /**
+     * Get rooms
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRooms()
+    {
+        return $this->rooms;
     }
 }

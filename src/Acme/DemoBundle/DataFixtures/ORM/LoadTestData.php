@@ -1,14 +1,16 @@
 <?php
 namespace Acme\DemoBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Acme\DemoBundle\Entity\Hotel;
 use Acme\DemoBundle\Entity\Room;
 use Acme\DemoBundle\Entity\Customer;
+use Acme\DemoBundle\Entity\Reservation;
 
-class LoadTestData implements FixtureInterface
+class LoadTestData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -33,6 +35,7 @@ class LoadTestData implements FixtureInterface
                 $room = new Room();
                 $room->setHotel($hotel);
                 $room->setNumber(101+$j);
+                $this->addReference( 'room_'. $i. '_'. ( 101 + $j ), $room );
                 $manager->persist($room);
             }
             
@@ -48,9 +51,23 @@ class LoadTestData implements FixtureInterface
             $customer->setName($customers['names'][$i]);
             $customer->setAge(rand(18, 50));
             
-            $manager->persist($customer);
+            //Reservations
+//            $reservation = new Reservation();
+//            $reservation->setCustomer( $customer );
+//            $reservation->setRoom( $this->getReference( 'room_'.  rand( 0, 6 ). '_'. ( 101 + rand( 0, 100 ) ) ) );
+//            $reservation->setInDate( new \DateTime() );
+//            $reservation->setOutDate( new \DateTime( '2013-04-01' ) );
+//            $reservation->setCreationDate( new \DateTime() );
+//        
+//            $manager->persist( $reservation );
+            $manager->persist( $customer );
         }        
         
         $manager->flush();
     }
+    
+    public function getOrder()
+	{
+		return 1;
+	}
 }
